@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>趙苡真｜作品集</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="home">
+  <!-- Tooltip（一定要在 body 裡） -->
+  <div id="categoryTooltip"></div>
+
+  <header class="topbar">
+    <div class="topbar__inner">
+      <div class="brand">趙苡真 ｜ 作品集</div>
+      <nav class="nav">
+        <a class="nav__link is-active" href="#home">首頁</a>
+        <a class="nav__link" href="#categories">作品類型</a>
+        <a class="nav__link" href="about.html">關於我</a>
+        
+      </nav>
+    </div>
+  </header>
+
+  <div class="bgStage" aria-hidden="true">
+    <div class="bgLayer bgCover"></div>
+    <div class="bgLayer bgCategory"></div>
+  </div>
+
+  <main class="snap">
+    <!-- Page 1 -->
+    <section id="home" class="page">
+      <div class="coverFG">
+        <div class="coverContent">
+          <div class="coverMeta">PORTFOLIO • 2022–2025</div>
+          <h1 class="coverNameZh">趙苡真</h1>
+          <div class="coverNameEn">Chao Yi Chen</div>
+        </div>
+        <div class="coverHint">SCROLL</div>
+      </div>
+    </section>
+
+    <!-- Page 2 -->
+    <section id="categories" class="page">
+      <div class="categoryFG">
+        <div class="categoryWrap">
+          <div class="categoryGrid">
+            <a class="categoryCard cat-product" href="product.html">
+              <div class="catIndex"></div>
+              <div>
+                <h3>立體產品</h3>
+                <p>Product Design</p>
+              </div>
+            </a>
+
+            <a class="categoryCard cat-model" href="model.html">
+              <div class="catIndex"></div>
+              <div>
+                <h3>立體模型</h3>
+                <p>3D Model</p>
+              </div>
+            </a>
+
+            <a class="categoryCard cat-craft" href="craft.html">
+              <div class="catIndex"></div>
+              <div>
+                <h3>工藝作品</h3>
+                <p>Craft</p>
+              </div>
+            </a>
+
+            <a class="categoryCard cat-graphic" href="art.html">
+              <div class="catIndex"></div>
+              <div>
+                <h3>平面作品</h3>
+                <p>Graphic</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // 背景淡出淡入（首頁第一頁→第二頁）
+    const bgCover = document.querySelector('.bgCover');
+    const bgCategory = document.querySelector('.bgCategory');
+    const page2 = document.getElementById('categories');
+
+    function updateBlend(){
+      const y = window.scrollY || 0;
+      const p2Top = page2.getBoundingClientRect().top + y;
+      const vh = window.innerHeight;
+
+      const start = p2Top - vh * 0.55;
+      const end   = p2Top + vh * 0.10;
+
+      let t = (y - start) / (end - start);
+      t = Math.max(0, Math.min(1, t));
+
+      bgCover.style.opacity = String(1 - t);
+      bgCategory.style.opacity = String(t);
+    }
+
+    window.addEventListener('scroll', updateBlend, { passive: true });
+    window.addEventListener('resize', updateBlend);
+    updateBlend();
+  </script>
+
+  <script>
+    // 類別 tooltip
+    const tooltip = document.getElementById('categoryTooltip');
+
+    const texts = [
+      "咖啡機 / 小夜燈 / 時鐘",
+      "動物簡化 / 城市之花 / 青鳥",
+      "皮革包 / 拉菲草包 / 銀線包",
+      "麥克筆作品 / 色鉛作品"
+    ];
+
+    document.querySelectorAll('.categoryCard').forEach((card, index) => {
+      card.addEventListener('mouseenter', () => {
+        tooltip.textContent = texts[index];
+        tooltip.style.opacity = '1';
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        tooltip.style.left = (e.clientX + 12) + 'px';
+        tooltip.style.top  = (e.clientY + 12) + 'px';
+      });
+
+      card.addEventListener('mouseleave', () => {
+        tooltip.style.opacity = '0';
+      });
+    });
+  </script>
+
+</body>
+</html>
